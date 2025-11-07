@@ -196,11 +196,7 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
         if (canvasRef.current) {
             canvasRef.current.clear();
         }
-        // Regenerate quiz options if in quiz mode
-        if (isQuizMode) {
-            const options = generateQuizOptions(currentWord, wordSet.words);
-            setQuizOptions(options);
-        }
+        // Don't regenerate quiz options - keep the same options for retry
     };
 
     const nextWord = () => {

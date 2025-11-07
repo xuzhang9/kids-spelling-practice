@@ -100,6 +100,16 @@ export const styles = {
         color: '#95a5a6',
         fontStyle: 'italic'
     },
+    editButton: {
+        backgroundColor: '#3498db',
+        color: 'white',
+        border: 'none',
+        borderRadius: '8px',
+        padding: '10px 20px',
+        fontSize: '14px',
+        fontWeight: 'bold',
+        cursor: 'pointer'
+    },
     deleteButton: {
         backgroundColor: '#e74c3c',
         color: 'white',
@@ -327,7 +337,8 @@ export const styles = {
         marginBottom: '15px',
         padding: '15px',
         backgroundColor: '#f0f0ff',
-        borderRadius: '12px'
+        borderRadius: '12px',
+        fontFamily: '-apple-system, "Noteworthy", "Bradley Hand", "Comic Sans MS", cursive, sans-serif'
     },
     instructionText: {
         fontSize: '16px',
@@ -538,7 +549,8 @@ export const styles = {
         minHeight: '80px',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        fontFamily: '-apple-system, "Noteworthy", "Bradley Hand", "Comic Sans MS", cursive, sans-serif'
     },
     quizOptionSelected: {
         backgroundColor: '#e7f3ff',

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { styles } from '../styles/styles';
 
-export default function WordListManager({ wordSets, onAddSet, onDeleteSet, onBack }) {
+export default function WordListManager({ wordSets, onAddSet, onDeleteSet, onEditSet, onBack }) {
     const [showForm, setShowForm] = useState(false);
+    const [editingId, setEditingId] = useState(null);
     const [setName, setSetName] = useState('');
     const [wordsInput, setWordsInput] = useState('');
 
@@ -10,11 +11,30 @@ export default function WordListManager({ wordSets, onAddSet, onDeleteSet, onBac
         e.preventDefault();
         const words = wordsInput.split('\n').map(w => w.trim()).filter(w => w !== '');
         if (setName && words.length > 0) {
-            onAddSet(setName, words);
+            if (editingId) {
+                onEditSet(editingId, setName, words);
+            } else {
+                onAddSet(setName, words);
+            }
             setSetName('');
             setWordsInput('');
             setShowForm(false);
+            setEditingId(null);
         }
+    };
+
+    const handleEdit = (set) => {
+        setEditingId(set.id);
+        setSetName(set.name);
+        setWordsInput(set.words.join('\n'));
+        setShowForm(true);
+    };
+
+    const handleCancel = () => {
+        setSetName('');
+        setWordsInput('');
+        setShowForm(false);
+        setEditingId(null);
     };
 
     return (
@@ -41,18 +61,27 @@ export default function WordListManager({ wordSets, onAddSet, onDeleteSet, onBac
                                         {set.words.length > 5 ? '...' : ''}
                                     </p>
                                 </div>
-                                <button
-                                    style={styles.deleteButton}
-                                    onClick={() => onDeleteSet(set.id)}
-                                >
-                                    Delete
-                                </button>
+                                <div style={{ display: 'flex', gap: '10px' }}>
+                                    <button
+                                        style={styles.editButton}
+                                        onClick={() => handleEdit(set)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        style={styles.deleteButton}
+                                        onClick={() => onDeleteSet(set.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
             ) : (
                 <form onSubmit={handleSubmit} style={styles.form}>
+                    <h3 style={styles.subtitle}>{editingId ? 'Edit Word Set' : 'Add New Word Set'}</h3>
                     <input
                         type="text"
                         placeholder="Word Set Name (e.g., Week 1 - Long Vowels)"
@@ -71,12 +100,12 @@ export default function WordListManager({ wordSets, onAddSet, onDeleteSet, onBac
                     />
                     <div style={styles.buttonGroup}>
                         <button type="submit" style={styles.primaryButton}>
-                            Save Word Set
+                            {editingId ? 'Update Word Set' : 'Save Word Set'}
                         </button>
                         <button
                             type="button"
                             style={styles.secondaryButton}
-                            onClick={() => setShowForm(false)}
+                            onClick={handleCancel}
                         >
                             Cancel
                         </button>
