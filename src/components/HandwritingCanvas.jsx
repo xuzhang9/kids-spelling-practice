@@ -156,8 +156,8 @@ const HandwritingCanvas = forwardRef(function HandwritingCanvas({ onTextChange, 
         <div style={styles.canvasContainer}>
             <canvas
                 ref={canvasRef}
-                width={500}
-                height={200}
+                width={600}
+                height={180}
                 style={styles.canvas}
                 onMouseDown={startDrawing}
                 onMouseMove={draw}

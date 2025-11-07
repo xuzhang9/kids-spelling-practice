@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Book spine/side shadow -->
+  <path d="M 20 18 L 25 15 L 25 85 L 20 82 Z" fill="#4a3a8a"/>
+
+  <!-- Book cover -->
+  <rect x="25" y="15" width="55" height="70" rx="3" fill="url(#gradient)"/>
+
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Book title area -->
+  <rect x="32" y="25" width="41" height="20" rx="2" fill="#fff" opacity="0.9"/>
+  <text x="52.5" y="39" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#667eea" text-anchor="middle">ABC</text>
+
+  <!-- Rocket icon on cover -->
+  <circle cx="52.5" cy="60" r="13" fill="#fff" opacity="0.2"/>
+  <!-- Rocket body -->
+  <ellipse cx="52.5" cy="61" rx="4" ry="7.5" fill="#ff6b6b"/>
+  <!-- Rocket nose cone -->
+  <path d="M 52.5 51 L 48.5 55 L 56.5 55 Z" fill="#ffd700"/>
+  <!-- Rocket window -->
+  <circle cx="52.5" cy="58" r="2.8" fill="#4a9eff"/>
+  <!-- Rocket fins -->
+  <path d="M 48.5 65 L 46 68 L 48.5 68 Z" fill="#ffa500"/>
+  <path d="M 56.5 65 L 59 68 L 56.5 68 Z" fill="#ffa500"/>
+  <!-- Rocket flame -->
+  <ellipse cx="52.5" cy="69" rx="2.5" ry="2.5" fill="#ffd700" opacity="0.8"/>
+  <ellipse cx="52.5" cy="70" rx="1.5" ry="1.8" fill="#ff9999" opacity="0.8"/>
+</svg>

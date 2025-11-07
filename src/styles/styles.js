@@ -14,10 +14,10 @@ export const styles = {
         fontWeight: 'bold'
     },
     subtitle: {
-        fontSize: '24px',
+        fontSize: '20px',
         color: '#667eea',
         textAlign: 'center',
-        marginBottom: '15px',
+        marginBottom: '8px',
         fontWeight: 'bold'
     },
     buttonGroup: {
@@ -140,8 +140,8 @@ export const styles = {
     practiceCard: {
         backgroundColor: '#f8f9fa',
         borderRadius: '16px',
-        padding: '20px',
-        marginTop: '15px',
+        padding: '15px',
+        marginTop: '10px',
         textAlign: 'center'
     },
     speakButton: {
@@ -149,11 +149,11 @@ export const styles = {
         color: 'white',
         border: 'none',
         borderRadius: '50px',
-        padding: '15px 30px',
-        fontSize: '20px',
+        padding: '12px 24px',
+        fontSize: '18px',
         fontWeight: 'bold',
         cursor: 'pointer',
-        marginBottom: '15px',
+        marginBottom: '12px',
         boxShadow: '0 4px 15px rgba(52, 152, 219, 0.4)'
     },
     practiceForm: {
@@ -193,10 +193,10 @@ export const styles = {
     },
     progressBar: {
         width: '100%',
-        height: '8px',
+        height: '6px',
         backgroundColor: '#e9ecef',
         borderRadius: '10px',
-        marginBottom: '15px',
+        marginBottom: '10px',
         overflow: 'hidden'
     },
     progressFill: {
@@ -206,9 +206,9 @@ export const styles = {
     },
     wordCounter: {
         textAlign: 'center',
-        fontSize: '16px',
+        fontSize: '14px',
         color: '#7f8c8d',
-        marginBottom: '5px'
+        marginBottom: '8px'
     },
     currentScore: {
         textAlign: 'center',
@@ -370,15 +370,15 @@ export const styles = {
     },
     modeHeader: {
         textAlign: 'center',
-        marginBottom: '10px'
+        marginBottom: '8px'
     },
     modeBadge: {
         display: 'inline-block',
         backgroundColor: '#667eea',
         color: 'white',
-        padding: '8px 20px',
+        padding: '6px 16px',
         borderRadius: '20px',
-        fontSize: '16px',
+        fontSize: '14px',
         fontWeight: 'bold'
     },
     wordReviewSection: {
@@ -458,25 +458,25 @@ export const styles = {
     },
     sideBySideContainer: {
         display: 'flex',
-        gap: '20px',
+        gap: '15px',
         marginTop: '15px',
         alignItems: 'flex-start',
         flexWrap: 'wrap'
     },
     handwritingSection: {
-        flex: '1',
-        minWidth: '280px'
+        flex: '2',
+        minWidth: '320px'
     },
     typingSection: {
         flex: '1',
-        minWidth: '250px',
+        minWidth: '180px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center'
     },
     spellingInputCompact: {
-        padding: '15px',
-        fontSize: '22px',
+        padding: '12px',
+        fontSize: '20px',
         borderRadius: '12px',
         border: '3px solid #667eea',
         outline: 'none',
@@ -503,11 +503,11 @@ export const styles = {
         color: 'white',
         border: 'none',
         borderRadius: '8px',
-        padding: '8px 16px',
-        fontSize: '14px',
+        padding: '6px 14px',
+        fontSize: '13px',
         fontWeight: 'bold',
         cursor: 'pointer',
-        marginBottom: '15px',
+        marginBottom: '10px',
         alignSelf: 'flex-start'
     },
     handwritingLabel: {

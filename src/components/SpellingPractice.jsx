@@ -33,12 +33,14 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
 
     // Initialize word list: shuffle for test/quiz, keep original for practice
     useEffect(() => {
-        if (isTestMode || isQuizMode) {
-            setCurrentWords(shuffleArray(wordSet.words));
-        } else {
-            setCurrentWords(wordSet.words);
+        if (wordSet && wordSet.words && wordSet.words.length > 0) {
+            if (isTestMode || isQuizMode) {
+                setCurrentWords(shuffleArray(wordSet.words));
+            } else {
+                setCurrentWords(wordSet.words);
+            }
         }
-    }, []);
+    }, [wordSet, isTestMode, isQuizMode]);
 
     // Load voices when component mounts
     useEffect(() => {
@@ -75,8 +77,9 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
 
     // Generate quiz options: 1 correct + 3 random wrong answers
     const generateQuizOptions = (correctWord, allWords) => {
-        // Get other words (excluding the correct one)
-        const otherWords = allWords.filter(w => w !== correctWord);
+        // Get other words (excluding the correct one) - use Set to remove duplicates
+        const uniqueWords = [...new Set(allWords)];
+        const otherWords = uniqueWords.filter(w => w !== correctWord);
 
         // Pick 3 random wrong answers
         const wrongAnswers = [];
@@ -90,7 +93,7 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
             wrongAnswers.push('---');
         }
 
-        // Combine and shuffle all 4 options
+        // Combine and shuffle all 4 options (don't include duplicates)
         const allOptions = [correctWord, ...wrongAnswers];
         return allOptions.sort(() => Math.random() - 0.5);
     };
@@ -105,11 +108,11 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
 
     // Generate quiz options when word changes in quiz mode
     useEffect(() => {
-        if (isQuizMode) {
+        if (isQuizMode && currentWord && wordSet.words) {
             const options = generateQuizOptions(currentWord, wordSet.words);
             setQuizOptions(options);
         }
-    }, [currentWordIndex, isQuizMode, currentWord]);
+    }, [currentWordIndex, isQuizMode, currentWord, wordSet.words]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -329,8 +332,12 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
     };
 
     // Wait for words to be initialized
-    if (currentWords.length === 0) {
-        return null;
+    if (!currentWords || currentWords.length === 0) {
+        return (
+            <div style={styles.container}>
+                <p style={styles.emptyMessage}>Loading words...</p>
+            </div>
+        );
     }
 
     // Results/Summary screen
