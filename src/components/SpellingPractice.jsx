@@ -31,16 +31,12 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
         return shuffled;
     };
 
-    // Initialize word list: shuffle for test/quiz, keep original for practice
+    // Initialize word list: shuffle for all modes
     useEffect(() => {
         if (wordSet && wordSet.words && wordSet.words.length > 0) {
-            if (isTestMode || isQuizMode) {
-                setCurrentWords(shuffleArray(wordSet.words));
-            } else {
-                setCurrentWords(wordSet.words);
-            }
+            setCurrentWords(shuffleArray(wordSet.words));
         }
-    }, [wordSet, isTestMode, isQuizMode]);
+    }, [wordSet]);
 
     // Load voices when component mounts
     useEffect(() => {
