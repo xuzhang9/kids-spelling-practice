@@ -322,12 +322,13 @@ export const styles = {
         backgroundColor: '#2ecc71',
         color: 'white',
         border: 'none',
-        borderRadius: '8px',
-        padding: '10px 20px',
-        fontSize: '14px',
+        borderRadius: '12px',
+        padding: '15px 25px',
+        fontSize: '18px',
         fontWeight: 'bold',
         cursor: 'pointer',
-        flex: '1'
+        width: '100%',
+        boxShadow: '0 4px 15px rgba(46, 204, 113, 0.4)'
     },
     wordDisplay: {
         fontSize: '36px',
@@ -469,21 +470,23 @@ export const styles = {
     },
     sideBySideContainer: {
         display: 'flex',
-        gap: '15px',
+        gap: '20px',
         marginTop: '15px',
         alignItems: 'flex-start',
         flexWrap: 'wrap'
     },
     handwritingSection: {
         flex: '2',
-        minWidth: '320px'
+        minWidth: '400px'
     },
     typingSection: {
         flex: '1',
-        minWidth: '180px',
+        minWidth: '220px',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center'
+        justifyContent: 'flex-start',
+        gap: '15px',
+        paddingTop: '0px'
     },
     spellingInputCompact: {
         padding: '12px',

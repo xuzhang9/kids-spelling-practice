@@ -156,8 +156,8 @@ const HandwritingCanvas = forwardRef(function HandwritingCanvas({ onTextChange, 
         <div style={styles.canvasContainer}>
             <canvas
                 ref={canvasRef}
-                width={600}
-                height={180}
+                width={650}
+                height={250}
                 style={styles.canvas}
                 onMouseDown={startDrawing}
                 onMouseMove={draw}
@@ -167,15 +167,7 @@ const HandwritingCanvas = forwardRef(function HandwritingCanvas({ onTextChange, 
                 onTouchMove={draw}
                 onTouchEnd={stopDrawing}
             />
-            <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-                <button
-                    style={styles.recognizeButton}
-                    onClick={recognizeText}
-                    type="button"
-                    disabled={isRecognizing}
-                >
-                    {isRecognizing ? '🔄 Recognizing...' : '✓ Recognize'}
-                </button>
+            <div style={{ marginTop: '10px', textAlign: 'center' }}>
                 <button
                     style={styles.clearButton}
                     onClick={clearCanvas}

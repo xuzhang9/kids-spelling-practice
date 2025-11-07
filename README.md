@@ -97,6 +97,42 @@ npm run build
 npm run preview
 ```
 
+### Deploying to GitHub Pages
+
+The app is configured to deploy automatically to GitHub Pages using GitHub Actions:
+
+**Manual deployment** (builds locally and pushes to gh-pages branch):
+```bash
+npm run deploy
+```
+
+**Automatic deployment** (recommended - uses GitHub Actions):
+
+1. **Enable GitHub Pages** in your repository:
+   - Go to Settings → Pages
+   - Under "Build and deployment", select "GitHub Actions"
+
+2. **Add Google Cloud API Key as a Secret**:
+   - Go to Settings → Secrets and variables → Actions
+   - Click "New repository secret"
+   - Name: `VITE_GOOGLE_CLOUD_API_KEY`
+   - Value: Your Google Cloud Vision API key
+   - Click "Add secret"
+
+3. **Push to GitHub**:
+   ```bash
+   git add .
+   git commit -m "Setup GitHub Actions deployment"
+   git push
+   ```
+
+4. **Deployment happens automatically**:
+   - Every push to `main` branch triggers deployment
+   - Check the "Actions" tab to see deployment progress
+   - Your app will be live at: `https://[your-username].github.io/[repo-name]/`
+
+**Note**: The GitHub Actions workflow includes the API key securely, so handwriting recognition will work on the deployed site!
+
 ### Network Access (iPad/Tablet)
 
 To access the app on your iPad or other devices:
@@ -182,6 +218,8 @@ phonics/
 
 - **React 18.2**: Modern React with hooks
 - **Vite 5.0**: Lightning-fast build tool and dev server
+- **PWA (Progressive Web App)**: Offline support and installability
+- **Service Workers**: Background caching and offline functionality
 - **Google Cloud Vision API**: Professional handwriting recognition
 - **Web Speech API**: Built-in browser text-to-speech
 
@@ -233,6 +271,32 @@ phonics/
 - Check firewall settings on your computer
 - Use the network URL shown in the terminal (not localhost)
 
+## Progressive Web App (PWA) Features
+
+This app is a **Progressive Web App** which means:
+
+### 📱 Install on Your Device
+- **iPad/iPhone**: Open in Safari → Share button → "Add to Home Screen"
+- **Android**: Open in Chrome → Menu → "Add to Home Screen" or "Install app"
+- **Desktop**: Look for the install icon in the browser address bar
+
+### 🔌 Offline Mode
+- Once installed, the app works **completely offline**
+- All word lists are saved locally on your device
+- Practice and Quiz modes work without internet
+- Test mode handwriting recognition requires internet connection
+
+### 🚀 Benefits
+- Launches like a native app (no browser UI)
+- Faster loading after first visit
+- Automatic updates when new versions are available
+- Works in airplane mode or with poor internet
+
+### How It Works
+- Service worker caches all app files on first visit
+- localStorage keeps your word sets and history
+- Google Cloud Vision API requires internet connection for handwriting recognition
+
 ## Future Enhancement Ideas
 
 - Export/import word lists
@@ -241,7 +305,6 @@ phonics/
 - Progress badges/achievements
 - Parent dashboard
 - Multiple user profiles
-- Offline mode with service workers
 
 ## License
 

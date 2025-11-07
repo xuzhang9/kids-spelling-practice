@@ -257,7 +257,8 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
             // Convert answers object to array
             const answersArray = Object.values(finalAnswers);
             if ((isTestMode || isQuizMode) && onSaveTestResult) {
-                const correctCount = answersArray.filter(a => a.isCorrect).length;
+                // Only count as correct if isCorrect AND attempts <= 1 (first try)
+                const correctCount = answersArray.filter(a => a.isCorrect && (a.attempts || 1) <= 1).length;
                 onSaveTestResult({
                     setId: wordSet.id,
                     setName: wordSet.name,
@@ -337,7 +338,8 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
         // Convert answers object to array
         const allAnswers = Object.values(answers);
 
-        const correctCount = allAnswers.filter(a => a.isCorrect).length;
+        // Only count as correct if isCorrect AND first try (attempts <= 1)
+        const correctCount = allAnswers.filter(a => a.isCorrect && (a.attempts || 1) <= 1).length;
         const percentage = allAnswers.length > 0 ? Math.round((correctCount / allAnswers.length) * 100) : 0;
 
         // Filter out current session from test history (tests within last 5 seconds)
@@ -370,30 +372,52 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
                     <div style={styles.wordReviewSection}>
                         <h3 style={styles.reviewTitle}>Word Review</h3>
                         <div style={styles.wordReviewList}>
-                            {allAnswers.map((answer, index) => (
-                                <div
-                                    key={index}
-                                    style={{
-                                        ...styles.wordReviewItem,
-                                        backgroundColor: answer.isCorrect ? '#d4edda' : '#f8d7da',
-                                        borderLeft: `4px solid ${answer.isCorrect ? '#28a745' : '#dc3545'}`
-                                    }}
-                                >
-                                    <div style={styles.reviewWordCorrect}>
-                                        {answer.isCorrect ? '✓' : '✗'} {answer.word}
-                                        {answer.attempts > 1 && (
-                                            <span style={styles.attemptCount}>
-                                                {' '}({answer.attempts} tries)
-                                            </span>
+                            {allAnswers.map((answer, index) => {
+                                // Determine status: correct on first try, correct with retries, or incorrect
+                                const firstTryCorrect = answer.isCorrect && (answer.attempts || 1) <= 1;
+                                const multipleTriesCorrect = answer.isCorrect && (answer.attempts || 1) > 1;
+                                const incorrect = !answer.isCorrect;
+
+                                let backgroundColor, borderColor, icon;
+                                if (firstTryCorrect) {
+                                    backgroundColor = '#d4edda'; // green
+                                    borderColor = '#28a745';
+                                    icon = '✓';
+                                } else if (multipleTriesCorrect) {
+                                    backgroundColor = '#fff3cd'; // yellow
+                                    borderColor = '#ffc107';
+                                    icon = '⚠';
+                                } else {
+                                    backgroundColor = '#f8d7da'; // red
+                                    borderColor = '#dc3545';
+                                    icon = '✗';
+                                }
+
+                                return (
+                                    <div
+                                        key={index}
+                                        style={{
+                                            ...styles.wordReviewItem,
+                                            backgroundColor,
+                                            borderLeft: `4px solid ${borderColor}`
+                                        }}
+                                    >
+                                        <div style={styles.reviewWordCorrect}>
+                                            {icon} {answer.word}
+                                            {answer.attempts > 1 && (
+                                                <span style={styles.attemptCount}>
+                                                    {' '}({answer.attempts} tries)
+                                                </span>
+                                            )}
+                                        </div>
+                                        {incorrect && (
+                                            <div style={styles.reviewWordIncorrect}>
+                                                Your answer: {answer.userAnswer}
+                                            </div>
                                         )}
                                     </div>
-                                    {!answer.isCorrect && (
-                                        <div style={styles.reviewWordIncorrect}>
-                                            Your answer: {answer.userAnswer}
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
 
@@ -554,7 +578,14 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
                                 />
                             </div>
                             <div style={styles.typingSection}>
-                                <form onSubmit={handleSubmit} style={styles.practiceForm}>
+                                <button
+                                    style={styles.recognizeButton}
+                                    onClick={() => canvasRef.current?.recognize()}
+                                    type="button"
+                                >
+                                    ✓ Recognize
+                                </button>
+                                <form onSubmit={handleSubmit} style={{...styles.practiceForm, marginTop: '30px'}}>
                                     <input
                                         type="text"
                                         value={userInput}
