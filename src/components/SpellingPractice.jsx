@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { styles } from '../styles/styles';
 import HandwritingCanvas from './HandwritingCanvas';
 import PracticeCanvas from './PracticeCanvas';
+import { playFullCelebration } from '../utils/celebrationSounds';
 
 export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestResult, testHistory = [] }) {
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -109,6 +110,22 @@ export default function SpellingPractice({ wordSet, mode, onFinish, onSaveTestRe
             setQuizOptions(options);
         }
     }, [currentWordIndex, isQuizMode, currentWord, wordSet.words]);
+
+    // Play celebration sounds when user gets 100% in quiz/test mode
+    useEffect(() => {
+        if (isFinished && (isTestMode || isQuizMode)) {
+            const allAnswers = Object.values(answers);
+            const correctCount = allAnswers.filter(a => a.isCorrect && (a.attempts || 1) <= 1).length;
+            const percentage = allAnswers.length > 0 ? Math.round((correctCount / allAnswers.length) * 100) : 0;
+
+            if (percentage === 100) {
+                // Play celebration sounds with a small delay to let the UI render first
+                setTimeout(() => {
+                    playFullCelebration();
+                }, 300);
+            }
+        }
+    }, [isFinished, isTestMode, isQuizMode, answers]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
